@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eswar Maguluri — Software Development Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F4F5F7;
+    --surface: #FFFFFF;
+    --ink: #10131A;
+    --muted: #5B6472;
+    --faint: #9AA2B1;
+    --line: #E1E4EA;
+    --accent: #2F6FED;
+    --accent-ink: #14306E;
+    --ok: #17944B;
+    --amber: #B6720A;
+    --code-bg: #0E1116;
+    --code-line: #232833;
+    --code-ink: #D6DCE5;
+    --code-muted: #6B7686;
+    --radius: 10px;
+    --disp: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+
+  ::selection{background:var(--accent); color:#fff;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- NAV ---------- */
+  header.topnav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(244,245,247,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1080px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:var(--mono); font-size:14px; font-weight:600;
+    display:flex; align-items:center; gap:8px;
+  }
+  .brand .dot{width:7px; height:7px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 3px rgba(23,148,75,0.15); flex-shrink:0;}
+  nav.links{display:flex; gap:2px;}
+  nav.links a{
+    font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    padding:8px 12px; border-radius:6px; transition:color .15s, background .15s;
+  }
+  nav.links a:hover, nav.links a:focus-visible{color:var(--accent-ink); background:#EAEFFC;}
+  .nav-toggle{display:none;}
+
+  @media (max-width:760px){
+    nav.links{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{padding:76px 0 64px;}
+  .hero-grid{
+    display:grid; grid-template-columns:1.15fr 1fr; gap:48px; align-items:start;
+  }
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; color:var(--accent-ink);
+    background:#EAEFFC; display:inline-flex; align-items:center; gap:8px;
+    padding:5px 10px; border-radius:5px; margin-bottom:22px;
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--ok);}
+
+  h1.name{
+    font-family:var(--disp); font-weight:700;
+    font-size:clamp(38px, 6vw, 60px);
+    line-height:1.03; letter-spacing:-0.02em;
+    margin-bottom:14px;
+  }
+  .role-line{
+    font-family:var(--mono); font-size:16px; color:var(--accent-ink);
+    margin-bottom:22px;
+  }
+  .summary{
+    color:var(--muted); font-size:16.5px; max-width:52ch; margin-bottom:30px;
+  }
+
+  .contact-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .contact-row a{
+    font-family:var(--mono); font-size:12.5px;
+    border:1px solid var(--line); background:var(--surface);
+    padding:9px 13px; border-radius:7px; color:var(--ink);
+    display:inline-flex; align-items:center; gap:7px;
+    transition:border-color .15s, transform .15s;
+  }
+  .contact-row a:hover, .contact-row a:focus-visible{border-color:var(--accent); transform:translateY(-1px);}
+  .contact-row svg{width:14px; height:14px; flex-shrink:0; opacity:.75;}
+
+  /* ---------- TERMINAL PANEL (signature element) ---------- */
+  .term{
+    background:var(--code-bg); border-radius:12px; overflow:hidden;
+    box-shadow:0 20px 50px -20px rgba(16,19,26,0.35);
+    border:1px solid #1B2029;
+  }
+  .term-bar{
+    display:flex; align-items:center; gap:6px;
+    padding:11px 14px; background:#151A21; border-bottom:1px solid #1F252F;
+  }
+  .term-bar span{width:10px; height:10px; border-radius:50%; background:#3A404C;}
+  .term-bar .title{
+    font-family:var(--mono); font-size:11px; color:var(--code-muted);
+    margin-left:8px;
+  }
+  .term-body{padding:20px 18px 22px; font-family:var(--mono); font-size:13px;}
+  .term-body .line{color:var(--code-muted); margin-bottom:2px;}
+  .term-body .prompt{color:#5EEAD4;}
+  .term-body .path{color:var(--code-ink);}
+  #typed{color:var(--code-ink); border-right:2px solid #5EEAD4; padding-right:2px;}
+  .json{margin-top:14px; color:var(--code-muted); white-space:pre; font-size:12.5px; line-height:1.75; opacity:0; animation:fadein .5s ease forwards;}
+  .json .k{color:#8FB8FF;}
+  .json .s{color:#B7E3A8;}
+  .json .n{color:#F2C879;}
+  @keyframes fadein{to{opacity:1;}}
+
+  .metrics-mini{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid #1F252F;}
+  .metrics-mini div{padding:14px 12px; border-right:1px solid #1F252F;}
+  .metrics-mini div:last-child{border-right:none;}
+  .metrics-mini .num{font-family:var(--mono); font-size:16px; color:#5EEAD4; font-weight:600;}
+  .metrics-mini .lbl{font-family:var(--mono); font-size:10px; color:var(--code-muted); margin-top:3px; text-transform:uppercase; letter-spacing:.04em;}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:58px 0;}
+  section + section{border-top:1px solid var(--line);}
+  .sec-head{
+    display:flex; align-items:baseline; gap:12px; margin-bottom:30px;
+  }
+  .sec-head .endpoint{
+    font-family:var(--mono); font-size:12px; color:var(--faint);
+  }
+  .sec-head h2{
+    font-family:var(--disp); font-size:24px; font-weight:600; letter-spacing:-0.01em;
+  }
+  .sec-head .method{
+    font-family:var(--mono); font-size:10.5px; font-weight:600;
+    color:var(--ok); border:1px solid #C7E7D3; background:#EEFBF2;
+    padding:2px 7px; border-radius:4px;
+  }
+
+  /* about */
+  .about-body{max-width:64ch; color:var(--muted); font-size:15.5px;}
+
+  /* stack */
+  .stack-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px 28px;}
+  @media (max-width:760px){.stack-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:520px){.stack-grid{grid-template-columns:1fr;}}
+  .stack-cat h3{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--accent-ink); margin-bottom:10px;
+  }
+  .tag-list{display:flex; flex-wrap:wrap; gap:6px;}
+  .tag-list span{
+    font-family:var(--mono); font-size:12px; color:var(--ink);
+    background:var(--surface); border:1px solid var(--line);
+    padding:4px 9px; border-radius:5px;
+  }
+
+  /* projects */
+  .project{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px 26px 24px; margin-bottom:22px;
+  }
+  .project:last-child{margin-bottom:0;}
+  .proj-top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:6px;}
+  .proj-top h3{font-family:var(--disp); font-size:19px; font-weight:600;}
+  .proj-links{display:flex; gap:8px; font-family:var(--mono); font-size:11.5px;}
+  .proj-links a{color:var(--accent-ink); border-bottom:1px solid transparent; padding-bottom:1px;}
+  .proj-links a:hover{border-bottom-color:var(--accent-ink);}
+  .proj-stack{font-family:var(--mono); font-size:11.5px; color:var(--faint); margin-bottom:14px;}
+  .proj-points{color:var(--muted); font-size:14.5px; margin-bottom:16px;}
+  .proj-points li{position:relative; padding-left:16px; margin-bottom:8px;}
+  .proj-points li::before{content:"—"; position:absolute; left:0; color:var(--faint);}
+  .proj-metrics{display:flex; flex-wrap:wrap; gap:10px;}
+  .proj-metrics span{
+    font-family:var(--mono); font-size:11.5px; color:var(--accent-ink);
+    background:#EAEFFC; padding:5px 10px; border-radius:6px;
+  }
+
+  /* experience / education timeline-ish, no arbitrary numbering */
+  .role-card{
+    display:grid; grid-template-columns:160px 1fr; gap:22px; margin-bottom:26px;
+  }
+  @media (max-width:600px){.role-card{grid-template-columns:1fr; gap:6px;}}
+  .role-card .when{font-family:var(--mono); font-size:12px; color:var(--faint); padding-top:2px;}
+  .role-card h3{font-family:var(--disp); font-size:17px; font-weight:600; margin-bottom:4px;}
+  .role-card .org{color:var(--muted); font-size:13.5px; margin-bottom:8px;}
+  .role-card p{color:var(--muted); font-size:14.5px;}
+
+  .cert-list li{
+    display:flex; justify-content:space-between; gap:16px;
+    padding:14px 0; border-bottom:1px solid var(--line); font-size:14.5px;
+  }
+  .cert-list li:last-child{border-bottom:none;}
+  .cert-list .issuer{font-family:var(--mono); font-size:12px; color:var(--faint);}
+
+  /* footer / contact */
+  footer{padding:64px 0 48px;}
+  .foot-inner{
+    background:var(--code-bg); border-radius:14px; padding:44px 40px;
+    color:var(--code-ink);
+  }
+  @media (max-width:600px){.foot-inner{padding:32px 22px;}}
+  .foot-inner .status-line{font-family:var(--mono); font-size:12px; color:#5EEAD4; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .foot-inner .status-line .dot{width:6px; height:6px; border-radius:50%; background:#5EEAD4;}
+  .foot-inner h2{font-family:var(--disp); font-size:28px; margin-bottom:10px;}
+  .foot-inner p{color:var(--code-muted); font-size:14.5px; margin-bottom:26px; max-width:48ch;}
+  .foot-links{display:flex; flex-wrap:wrap; gap:10px;}
+  .foot-links a{
+    font-family:var(--mono); font-size:12.5px; color:var(--code-ink);
+    border:1px solid var(--code-line); padding:9px 13px; border-radius:7px;
+    transition:border-color .15s, color .15s;
+  }
+  .foot-links a:hover{border-color:#5EEAD4; color:#5EEAD4;}
+  .copyright{text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--faint); margin-top:22px;}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="nav-inner">
+    <div class="brand"><span class="dot"></span> eswar.dev</div>
+    <nav class="links">
+      <a href="#about">/about</a>
+      <a href="#stack">/stack</a>
+      <a href="#projects">/projects</a>
+      <a href="#experience">/experience</a>
+      <a href="#education">/education</a>
+      <a href="#contact">/contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> OPEN TO OPPORTUNITIES</div>
+        <h1 class="name">Eswar Maguluri</h1>
+        <div class="role-line">Software Development Engineer — Backend &amp; Distributed Systems</div>
+        <p class="summary">Backend-focused engineer building scalable, fault-tolerant REST APIs and event-driven architectures with Python, Django, and FastAPI — with hands-on experience in load testing, root-cause analysis, and production deployment.</p>
+        <div class="contact-row">
+          <a href="mailto:eswarmaguluri02@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" stroke-linejoin="round"/><path d="M4 6l8 7 8-7" stroke-linejoin="round"/></svg>
+            eswarmaguluri02@gmail.com
+          </a>
+          <a href="tel:+919381643007">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+            +91 93816 43007
+          </a>
+          <a href="https://github.com/eswar-maguluri" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.35 4.68-4.58 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>
+            GitHub
+          </a>
+          <a href="https://linkedin.com/in/eswar-maguluri" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5zM3 9.98h4V21H3zM9.5 9.98H13v1.51h.06c.5-.9 1.7-1.85 3.5-1.85 3.74 0 4.44 2.34 4.44 5.39V21h-4v-5.4c0-1.29-.02-2.94-1.8-2.94-1.8 0-2.08 1.4-2.08 2.85V21h-4z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://eswar-dev1.onrender.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg>
+            Portfolio
+          </a>
+        </div>
+      </div>
+
+      <div class="term">
+        <div class="term-bar">
+          <span></span><span></span><span></span>
+          <div class="title">status.sh</div>
+        </div>
+        <div class="term-body">
+          <div class="line"><span class="prompt">$</span> <span class="path">curl</span> api.eswar.dev/status</div>
+          <div id="typed"></div>
+          <pre class="json" id="jsonOut"></pre>
+        </div>
+        <div class="metrics-mini">
+          <div><div class="num">91+</div><div class="lbl">req/sec sustained</div></div>
+          <div><div class="num">0%</div><div class="lbl">error rate</div></div>
+          <div><div class="num">8+</div><div class="lbl">REST APIs shipped</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="reveal">
+    <div class="sec-head">
+      <span class="method">GET</span>
+      <span class="endpoint">/about</span>
+      <h2>Summary</h2>
+    </div>
+    <p class="about-body">Backend-focused Software Engineer with strong proficiency in Python, Django, FastAPI, and distributed systems design. Experienced building scalable, fault-tolerant REST APIs, event-driven architectures, and multi-tiered platforms with a focus on performance, reliability, and large-scale system design — plus hands-on experience in load testing, root cause analysis, and production deployment.</p>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack" class="reveal">
+    <div class="sec-head">
+      <span class="method">GET</span>
+      <span class="endpoint">/stack</span>
+      <h2>Technical Skills</h2>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-cat">
+        <h3>Languages</h3>
+        <div class="tag-list"><span>Python</span><span>JavaScript</span></div>
+      </div>
+      <div class="stack-cat">
+        <h3>Backend</h3>
+        <div class="tag-list"><span>FastAPI</span><span>Django</span><span>Django REST Framework</span><span>REST APIs</span><span>MVC</span><span>Celery</span><span>JWT Auth</span><span>SQLAlchemy ORM</span></div>
+      </div>
+      <div class="stack-cat">
+        <h3>Frontend</h3>
+        <div class="tag-list"><span>React.js</span><span>Next.js</span><span>Tailwind CSS</span><span>Recharts</span><span>HTML</span><span>CSS</span><span>GSAP</span></div>
+      </div>
+      <div class="stack-cat">
+        <h3>Databases</h3>
+        <div class="tag-list"><span>PostgreSQL</span><span>MySQL</span><span>Redis</span><span>Firebase Firestore</span></div>
+      </div>
+      <div class="stack-cat">
+        <h3>Cloud &amp; Tools</h3>
+        <div class="tag-list"><span>Azure</span><span>Docker</span><span>Nginx</span><span>Kafka</span><span>Prometheus</span><span>Git</span><span>GitHub</span><span>Stripe API</span><span>k6</span></div>
+      </div>
+      <div class="stack-cat">
+        <h3>Core CS &amp; Concepts</h3>
+        <div class="tag-list"><span>Data Structures &amp; Algorithms</span><span>OOP</span><span>DBMS</span><span>Operating Systems</span><span>Distributed Systems</span><span>Fault-Tolerant Architecture</span><span>Large-Scale System Design</span><span>API Optimization</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="reveal">
+    <div class="sec-head">
+      <span class="method">GET</span>
+      <span class="endpoint">/projects</span>
+      <h2>Projects</h2>
+    </div>
+
+    <div class="project">
+      <div class="proj-top">
+        <h3>FlashLink — Distributed URL Shortener with Real-Time Analytics</h3>
+        <div class="proj-links"><a href="https://github.com/eswar-maguluri/FlashLink" target="_blank" rel="noopener">GitHub</a><a href="https://flash-link-26.vercel.app/" target="_blank" rel="noopener">Live Demo</a></div>
+      </div>
+      <div class="proj-stack">FastAPI · PostgreSQL · React.js · Redis · Kafka · Prometheus · Docker · JWT · SQLAlchemy</div>
+      <ul class="proj-points">
+        <li>Architected a distributed URL-shortening platform using FastAPI, PostgreSQL, and React, implementing custom Snowflake ID generation and Base62 encoding for globally unique, collision-free short URLs at scale.</li>
+        <li>Designed and developed 8+ RESTful APIs for authentication, URL management, redirection, and analytics, securing 100% of user operations with JWT-based stateless authentication.</li>
+        <li>Load-tested the redirection service with k6, sustaining 91+ requests/sec at 50 concurrent users with a 0% error rate across 2,900+ requests.</li>
+        <li>Built a real-time analytics pipeline tracking clicks, unique visitors, and browser statistics using Redis and Kafka; developed a React + Recharts dashboard with Prometheus-instrumented, containerized deployment on Render and Vercel.</li>
+      </ul>
+      <div class="proj-metrics">
+        <span>91+ req/s @ 50 concurrent users</span>
+        <span>0% error rate / 2,900+ requests</span>
+        <span>8+ REST APIs</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="proj-top">
+        <h3>Prime Store — Full-Stack E-Commerce Application</h3>
+        <div class="proj-links"><a href="https://github.com/eswar-maguluri/Prime-Store" target="_blank" rel="noopener">GitHub</a></div>
+      </div>
+      <div class="proj-stack">Django · PostgreSQL · JWT · Stripe API</div>
+      <ul class="proj-points">
+        <li>Designed a multi-tiered, distributed Django backend with modular REST APIs for users, products, orders, and payments, demonstrating fault-tolerant, scalable architecture.</li>
+        <li>Engineered relational PostgreSQL schemas with optimized indexing, reducing query latency for high-read endpoints through structured query tuning.</li>
+        <li>Implemented secure JWT authentication, Stripe payment processing with transaction validation, and role-based admin dashboards for inventory management.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="proj-top">
+        <h3>SR Cleaning Solutions — Multilingual Service Website</h3>
+        <div class="proj-links"><a href="https://sr-cleaning-solutions.vercel.app/" target="_blank" rel="noopener">Live Demo</a><a href="https://github.com/eswar-maguluri/sr-cleaning-solutions" target="_blank" rel="noopener">GitHub</a></div>
+      </div>
+      <div class="proj-stack">Next.js · React.js · Tailwind CSS · Firebase Firestore · GSAP · Swiper.js · Vercel</div>
+      <ul class="proj-points">
+        <li>Developed a multilingual cleaning services platform supporting English and Telugu with dynamic language switching for localized user experiences.</li>
+        <li>Built a mobile-first responsive application using 9 reusable React components, ensuring compatibility across mobile, tablet, and desktop devices.</li>
+        <li>Integrated Firebase Firestore for real-time customer review submission and retrieval, and added WhatsApp, Click-to-Call, and Email integrations with GSAP animations and testimonial sliders to improve engagement and lead generation.</li>
+      </ul>
+      <div class="proj-metrics">
+        <span>2 languages supported</span>
+        <span>9 reusable components</span>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="proj-top">
+        <h3>FoodPlaza — Food Delivery Web Application</h3>
+        <div class="proj-links"><a href="https://github.com/eswar-maguluri/FoodPlaza" target="_blank" rel="noopener">GitHub</a></div>
+      </div>
+      <div class="proj-stack">Django · PostgreSQL</div>
+      <ul class="proj-points">
+        <li>Developed a Django backend supporting 50+ menu items with normalized schemas, reducing data redundancy by 25%; designed scalable order workflow APIs with role-based access control for admins and customers.</li>
+      </ul>
+      <div class="proj-metrics">
+        <span>50+ menu items</span>
+        <span>25% less data redundancy</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="reveal">
+    <div class="sec-head">
+      <span class="method">GET</span>
+      <span class="endpoint">/experience</span>
+      <h2>Internship</h2>
+    </div>
+    <div class="role-card">
+      <div class="when">May 2025 — Jul 2025</div>
+      <div>
+        <h3>Python Full-Stack Program</h3>
+        <div class="org">ExcelR EdTech</div>
+        <p>Trained in Python, Django, REST concepts, ORM, and MVC architecture; participated in code reviews and Agile, quality-first development practices.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="reveal">
+    <div class="sec-head">
+      <span class="method">GET</span>
+      <span class="endpoint">/education</span>
+      <h2>Education &amp; Certifications</h2>
+    </div>
+    <div class="role-card">
+      <div class="when">Graduation: Mar 2026</div>
+      <div>
+        <h3>Bachelor of Science in Computer Science</h3>
+        <div class="org">JKC College, Acharya Nagarjuna University · CGPA 7.5 / 10</div>
+      </div>
+    </div>
+
+    <ul class="cert-list">
+      <li><span>Microsoft AI &amp; ML Engineering Professional Certificate</span><span class="issuer">Microsoft · Coursera</span></li>
+      <li><span>Introduction to Software Engineering</span><span class="issuer">IBM · Coursera</span></li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="foot-inner">
+    <div class="status-line"><span class="dot"></span> 200 OK — ready to connect</div>
+    <h2>Let's build something reliable.</h2>
+    <p>Open to Software Development Engineer roles — backend, distributed systems, and API-heavy platforms.</p>
+    <div class="foot-links">
+      <a href="mailto:eswarmaguluri02@gmail.com">eswarmaguluri02@gmail.com</a>
+      <a href="tel:+919381643007">+91 93816 43007</a>
+      <a href="https://github.com/eswar-maguluri" target="_blank" rel="noopener">github.com/eswar-maguluri</a>
+      <a href="https://linkedin.com/in/eswar-maguluri" target="_blank" rel="noopener">linkedin.com/in/eswar-maguluri</a>
+      <a href="https://eswar-dev1.onrender.com" target="_blank" rel="noopener">eswar-dev1.onrender.com</a>
+    </div>
+  </div>
+  <div class="copyright">© 2026 Eswar Maguluri — built with intent, deployed with care.</div>
+</footer>
+
+<script>
+  // Typing animation for terminal hero
+  const typedEl = document.getElementById('typed');
+  const jsonEl = document.getElementById('jsonOut');
+  const fullText = "";
+  const jsonLines = [
+'{',
+'  <span class="k">"role"</span>: <span class="s">"Software Development Engineer"</span>,',
+'  <span class="k">"focus"</span>: <span class="s">"backend, distributed systems"</span>,',
+'  <span class="k">"stack"</span>: <span class="s">"Python / Django / FastAPI"</span>,',
+'  <span class="k">"availability"</span>: <span class="s">"open"</span>,',
+'  <span class="k">"latency"</span>: <span class="n">"~fast reply"</span>',
+'}'
+  ].join('\n');
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function typeOut(){
+    if(prefersReduced){
+      typedEl.textContent = '';
+      jsonEl.innerHTML = jsonLines;
+      jsonEl.style.opacity = 1;
+      return;
+    }
+    let i = 0;
+    const text = "connection established";
+    const interval = setInterval(() => {
+      typedEl.textContent = text.slice(0, i);
+      i++;
+      if(i > text.length){
+        clearInterval(interval);
+        setTimeout(() => {
+          jsonEl.innerHTML = jsonLines;
+          jsonEl.style.animation = 'fadein .6s ease forwards';
+        }, 250);
+      }
+    }, 45);
+  }
+  typeOut();
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !prefersReduced){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
